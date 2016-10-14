@@ -1,0 +1,22 @@
+* Precedence
+  infixr 0 ($)
+  infixr 2 (||)
+  infixr 3 (&&)
+  infix  4 (>) (<) (==) (<=) (>=)
+  infixr 5 (:)
+  infixl 6 (+) (-)
+  infixl 7 (*) (/)
+  infixr 8 (^)
+  infixr 9 (.)
+  
+* All chapter references
+  https://github.com/pushcx/hpffp-resources
+
+* :sprint doesn't work in polymorphic types, has to be variables with concrete type
+
+* Three kinds of bottom:
+  1. divergence in beta reduction/evaluation (never ending recursion)
+  2. error "error message" :: [Char] -> a
+  3. 'undefined' is a value of all types
+
+* 

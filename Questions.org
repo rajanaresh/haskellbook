@@ -1,0 +1,85 @@
+* Questions for study group
+  - [X] How do I create user defined function/operator with custom precedence and 
+    associativity (infixl, infixr)? 
+    #+BEGIN_SRC haskell
+add x y = x +y 
+mul x y = x * y
+
+test = 4 `mul` 2 `add` 2
+test2 = 2 `add` 2 `mul` 4
+    #+END_SRC
+    infixl 5 add      -- might work only for operator
+    add x y = x + y   -- check this
+    (csinaction.com) 
+  - [ ] Where can I find typeclassopedia for Ord, Eq, Integral, Fractionl, Real, Enum, Num?
+  - [ ] Why are there so many forward references in Haskell books?
+  - [ ] Below code from chapter 5 exercise
+    #+BEGIN_SRC haskell
+:t (* 9) 6             -- interpreter gives Num a => a, but when loaded from file gives Integer, why? 
+    #+END_SRC
+  - [ ] Page 287, all types that have an Enum instance should have Ord instance, why doesn't
+    GHC impose this? 
+    #+BEGIN_SRC haskell
+:info Enum            -- says 'Class Enum a where' instead of 'Class Ord a => Enum a where'
+    #+END_SRC
+  - [ ] Doesn't the type inference take care of this? (Chapter 6 exercises, 11 and 8 from 'Match the types')
+    #+BEGIN_SRC haskell
+mySort :: [Char] -> [Char]
+mySort = sort
+
+signifier :: [Char] -> Char                  -- Substitute Ord a => [a] -> a
+signifier xs = head (mySort xs)
+
+myX = 1 :: Int
+
+sigmund :: Int -> Int                        -- Substitute Num a => a -> a              
+sigmund x = myX
+    #+END_SRC
+  - [ ] Type-Kwon-do two (Chapter 6 ex 2)
+  - [ ] Page 438 Chapter 7 exercise, why doesn't the roundTrip type get resolved and error at compile time. 
+    #+BEGIN_SRC haskell
+module Arith4 where
+
+roundTrip :: (Show a, Read b) => a -> b
+roundTrip = read . show
+
+main = do
+  print (roundTrip "hello"::Int)            -- Why doesn't this get resolved at compile time
+  print (id 4)
+    #+END_SRC
+  - [ ] Page 518, Weak Head Normal Form (WHNF), more examples to clarify. Left with at best sloppy 
+    understanding of :sprint. I am tending towards :sprint is a way to look at the WHNF but the below examples
+    are confusing
+    #+BEGIN_SRC haskell
+let x = (1, 1 + 1)                         -- WHNF, but not NF (from page 519)
+:sprint x                                  -- Shows x = _, why? 
+    #+END_SRC
+    Because :sprint does NOT work on polymorphic types, make sure to concretize the types before checking
+    it's WHNF.
+  - [ ] Page 488 chapter 9 exercise, why does the second one blow up?
+    #+BEGIN_SRC haskell
+[x^y | x <- [1..5], y <- [2, undefined]]  -- Why doesn't it blow up? 
+    #+END_SRC
+  - [ ] Page 596, Chapter 11 exercise 5, when should I be considering a type variable/parameter
+    #+BEGIN_SRC haskell
+data Airline = PapuAir Integer
+             | CatapultsR'Us Integer
+             | TakeYourChancesUnited Integer
+               deriving (Eq, Show)
+
+-- vs
+
+data Airline a = PapuAir a
+             | CatapultsR'Us a
+             | TakeYourChancesUnited a
+               deriving (Eq, Show)      -- When should I be using this vs the above? 
+
+
+    #+END_SRC
+  - [ ] Page
+    #+BEGIN_SRC haskell
+
+    #+END_SRC
+  - 
+    
+
