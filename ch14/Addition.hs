@@ -7,7 +7,6 @@ import Test.Hspec
 sayHello :: IO ()
 sayHello = putStrLn "hello!"
 
-
 dividedBy :: Integral a => a -> a -> (a, a)
 dividedBy num denom = go num denom 0
   where go n d count | n < d     = (count, n)
@@ -31,3 +30,44 @@ main = hspec $ do
       recMul 12 0 `shouldBe` 0
     it "x + 1 is always greater than x" $ do
       property $ \x -> x + 1 > (x :: Int)
+    it "dividedBy 5 has always remainder < 5" $ do
+      property $ \x -> snd (dividedBy x (5::Integer)) < 5
+
+oneThroughThree :: Gen Int
+oneThroughThree = elements [1..100]
+
+genBool :: Gen Bool
+genBool = choose (False, True)
+
+genBool' :: Gen Bool
+genBool' = elements [False, True]
+
+genOrdering :: Gen Ordering
+genOrdering = elements [LT, EQ, GT]
+
+genChar :: Gen Char
+genChar = elements ['a'..'z']
+
+genEither :: (Arbitrary a, Arbitrary b) => Gen (Either a b)
+genEither =
+  arbitrary >>=
+  (\x -> arbitrary >>=
+         (\y -> elements [Left x, Right y]))
+
+genMaybe :: (Arbitrary a) => Gen (Maybe a)
+genMaybe =
+  arbitrary >>=
+  (\x -> elements [Nothing, Just x])
+     
+genMaybe' :: Arbitrary a => Gen (Maybe a)
+genMaybe' =
+  arbitrary >>=
+  (\x -> frequency [ (2, return Nothing)
+                   , (3, return (Just x)) ])
+
+
+propAdditionGreater :: Int -> Bool
+propAdditionGreater x = x + 1 > x
+
+runQC :: IO ()
+runQC = quickCheck propAdditionGreater
